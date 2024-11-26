@@ -95,7 +95,7 @@ Move the dataset into a data/raw folder.
 Unpack the dataset into a single CSV file in the raw bucket:
 
 ```bash
-python src/unpack_data.py --input_dir data/raw --bucket_name raw --output_file_name combined_raw.csv
+python build/unpack_to_raw.py --input_dir data/raw --bucket_name raw --output_file_name combined_raw.csv
 ```
 
 Preprocess the data to clean, encode, split into train/dev/test, and compute class weights:
