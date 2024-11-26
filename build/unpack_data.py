@@ -30,8 +30,22 @@ def unpack_data(input_dir, output_file):
     - Sauvegardez le résultat avec `to_csv`.
     """
 
-    pass
+    dataframes = []
+    # Parcourir tous les fichiers et dossiers dans input_dir
+    for item in os.listdir(input_dir):
+        item_path = os.path.join(input_dir, item)
+        # Si l'élément est un fichier...
+        if os.path.isfile(item_path) and (item.endswith(".csv") or "data-" in item):
+            df = pd.read_csv(item_path)
+            dataframes.append(df)
+        # Si l'élément est un dossier...
+        elif os.path.isdir(item_path):
+            # Appeler récursivement unpack_data pour traiter le sous-dossier
+            dataframes.extend(unpack_data(item_path, output_file)) 
 
+    combined_df = pd.concat(dataframes, ignore_index=True)
+    combined_df.to_csv(output_file, index=False)
+    return dataframes  # Retourner la liste des dataframes
 
 
 if __name__ == "__main__":
